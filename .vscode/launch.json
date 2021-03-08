@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python: 目前檔案",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
             "name": "clang++ - 建置及偵錯使用中的檔案",
             "type": "cppdbg",
             "request": "launch",
@@ -16,12 +23,7 @@
             "externalConsole": true,
             "MIMode": "lldb",
             "preLaunchTask": "C/C++: clang++ 建置使用中檔案",
-            "internalConsoleOptions": "openOnSessionStart",
-            "logging": {
-                "moduleLoad": false,
-                "programOutput": true,
-                "trace": true
-            }
+            "internalConsoleOptions": "openOnSessionStart"
         }
     ]
 }
