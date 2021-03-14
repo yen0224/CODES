@@ -19,10 +19,10 @@ int main(int argc, char const *argv[])
     double immigrantPerYear = yearSecound / 45;
     //output the current population
     cout << "Current population is " << current_amount << endl;
-    //use for loop to output the polulation for the next 5 year
+    //use for loop to output the polulation for the next 5 years
     for (int i = 1; i < 6; i++)
     {
-        cout << "After " << i << " Year, the population will be "<< current_amount + int(i * birthPerYear) - int(i * deathPerYear) + int(i * immigrantPerYear) << endl;
+        cout << "After " << i << " Year, the population will be " << current_amount + int(i * birthPerYear) - int(i * deathPerYear) + int(i * immigrantPerYear) << endl;
     }
     return 0;
 }
