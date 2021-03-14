@@ -9,7 +9,7 @@ int main(int argc, char const *argv[])
     //current population is 312032486
     long current_amount = 312032486;
     //every day has 86400 sec.
-    //86400*465=31536000
+    //86400*365=31536000
     long yearSecound = 31536000;
     //birth rate per year
     double birthPerYear = yearSecound / 7;
