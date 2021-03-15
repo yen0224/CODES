@@ -11,11 +11,11 @@ int main(int argc, char const *argv[])
         sum+=userinput[i];   
     }
     avg=sum/10;
-    cout << "The mean is " << avg << endl;
     for (int i = 0; i < 10; i++)
     {
         devsum+=pow(userinput[i]-avg,2);
     }
+    cout << "The mean is " << avg << endl;
     cout << "The standard deviation is " << sqrt(devsum/9) << endl;
 
     return 0;
