@@ -129,7 +129,7 @@ void MonthDayOutput(int month, int year, int mode)
             //cout<<<<"|";
             for (int j = 0; j < 6 * firstday[i]; j++)
                 cout << " ";
-            for (int k = 0; k != jumpLine[k] + 1; k++)
+            for (int k = 0; k != jumpLine[i] + 1; k++)
             {
                 cout << setw(6) << right << k + 1;
                 if (jumpLine[i] == k)
