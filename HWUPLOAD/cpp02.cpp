@@ -1,8 +1,3 @@
-//this is the solution to EX
-//student's ID: S0951037, Chia-Yen Hsu
-//complier platform MacOS 11.2.3 Clang++(apple clang 12.0.0)
-//encode: UTF-8
-//DO NOT COPY
 #include <iostream>
 using namespace std;
 int main(int argc, char const *argv[])

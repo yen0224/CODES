@@ -21,7 +21,7 @@ int main()
     cout<<[字串、變數]<<[字串、變數];
     以下為示範：
     */
-    cout << "helloworld"; //helloworld這幾字為字串“string”
+    cout << "helloworld"<<endl; //helloworld這幾字為字串“string”
     cout << a << b;       //輸出a和b，分別呼叫變數
     a = a + b;            //基本運算，一個等號為「賦值」，兩個等號才是「運算子」，本行程式碼意為將變數a設為a+b之值
     // 倒斜線＋n為一跳脫字元，表換行
