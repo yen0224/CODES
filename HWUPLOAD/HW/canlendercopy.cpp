@@ -8,8 +8,8 @@ void canlenderTitle(int month, int year)
 {
     string mounthName[12] = {
         "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-    cout << "|               " << setw(9)<<std::left<<mounthName[month] <<setw(4)<< year<< "                 |"<< endl;
-    cout << "|---------------------------------------------|" << endl;
+    cout << "                " << setw(9)<<std::left<<mounthName[month] <<setw(4)<< year<< "                  "<< endl;
+    cout << "-----------------------------------------------" << endl;
     cout << "     S     M     T     W     T     F     S" << endl;
 }
 //輸出閏年之月曆
@@ -23,7 +23,7 @@ void isLeapYear(int month, int jumpLine)
 
         while (jumpLine == 0)
         {
-            cout <<"****|"<< endl;
+            cout <<"    "<< endl;
             jumpLine = 7;
         }
         jumpLine--;
@@ -38,7 +38,7 @@ void notLeapYear(int month, int jumpLine)
         cout<<setw(6)<<right<<i+1;
         while (jumpLine == 0)
         {
-            cout <<"    |"<< endl;
+            cout <<"    "<< endl;
             jumpLine = 7;
         }
         jumpLine--;
@@ -106,42 +106,23 @@ int main(int argc, char const *argv[])
     int year;
 
     cout << "Enter the year of the canlender which you want to see:" << endl;
-    //cin >> year;
-    year=2020;
+    cin >> year;
+    
     //待新增功能：使使用者可選擇輸出格式
 
-    cout << "[OPTION] please select the format you want :" << endl;
+    /*cout << "[OPTION] please select the format you want :" << endl;
     cout << "[0]12x1" << endl
          << "[1] 3x4" << endl
          << "[2] 4x3" << endl;
     int format;
+    */
     //cin >> format;
-    format=0;
-    switch (format)
-    {
-    case 0:
         for (int month = 0; month < 12; month++)
         {
             canlenderTitle(month, year);
             canlenderBody(month, year);
             cout << endl;
         }
-        break;
-    case 1:
-        
-        break;
-    case 2:
-        
-        break;
-    default:
-        cout << "unselected,or error command the program would process by [default]";
-        for (int month = 0; month < 12; month++)
-        {
-            canlenderTitle(month, year);
-            canlenderBody(month, year);
-            cout << endl;
-            break;
-        }
+       
         return 0;
     }
-}
