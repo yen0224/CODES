@@ -2,10 +2,11 @@
 #include <iomanip>
 //#include <time.h>
 using namespace std;
-//在這邊輸出所有的月曆標頭，並用陣列特性直接呼叫月份名稱出來
-//不需再更動
+
 int frameStart[4];
 int firstday,jumpLine;
+//在這邊輸出所有的月曆標頭，並用陣列特性直接呼叫月份名稱出來
+//不需再更動
 void canlenderTitle(int startMonth, int year, int amount)
 {
     string mounthName[12] = {
@@ -16,7 +17,8 @@ void canlenderTitle(int startMonth, int year, int amount)
     }
     cout << endl;
 }
-//月跟月的分界、星期名稱與數字的分隔，可連續輸出多個不需再做更動
+//月跟月的分界、星期名稱與數字的分隔，可連續輸出多個
+//不需再做更動
 void seperator(int tms)
 {
     for (int i = 0; i < tms; i++)
@@ -34,34 +36,6 @@ void weekName(int tms)
         cout << "|    S     M     T     W     T     F     S    |";
     }
     cout << endl;
-}
-//輸出閏年之月曆，參數：月，跳行，模式，是否為潤
-void MonthDayOutput(int month, int jumpLine, int mode, int isLeap)
-{
-    int monthdayLeap[12] = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-    int monthday[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-    
-    switch (mode)
-    {
-    case 0:
-        for (int i = 0; i < (isLeap?monthdayLeap[month]:monthday[month]); i++)
-        {
-            cout << setw(6) << right << i + 1;
-
-            while (jumpLine == 0)
-            {
-                cout << setw(5) << "|" << endl;
-                jumpLine = 7;
-            }
-            jumpLine--;
-        }
-        break;
-    case 1:
-        break;
-    case 2:
-    default:
-        break;
-    }
 }
 //判斷該年該月之第一天是星期幾
 //有二參數傳入：月份和年份
@@ -89,38 +63,60 @@ int get_monthFirstDay(int month, int year)
     w %= 7;
     return w;
 }
-void canlenderBody(int month, int year,int mode)
+//輸出閏年之月曆，參數：月，跳行，模式，是否為潤
+void MonthDayOutput(int month,int year, int mode)
 {
-    firstday = get_monthFirstDay(month, year);
-    jumpLine = 6 - firstday;
-    for (int i = 0; i < 6 * firstday; i++)
-        cout << " ";
+    int isLeap;
+    firstday=get_monthFirstDay(month,year);
+    jumpLine=6-firstday;
+    int monthdayLeap[12] = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    int monthday[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     if (year % 4 == 0)
     {
         if (year % 100 == 0)
         {
             if (year % 400 == 0)
-                MonthDayOutput(month, jumpLine,mode,1);
+                isLeap=1;
 
             else
-                MonthDayOutput(month, jumpLine,mode,0);
+               isLeap=0;
         }
         else
         {
-            MonthDayOutput(month, jumpLine,mode,1);
+            isLeap=1;
         }
     }
     else
     {
-        MonthDayOutput(month, jumpLine,mode,0);
+        isLeap=0;
     }
-    //cout<<"^start at here"<<endl;
-}
+    switch (mode)
+    {
+    case 0:
+        for (int i = 0; i < 6 * firstday; i++)
+        cout << " ";
+        for (int i = 0; i < (isLeap?monthdayLeap[month]:monthday[month]); i++)
+        {
+            cout << setw(6) << right << i + 1;
 
+            while (jumpLine == 0)
+            {
+                cout << setw(5) << "|" << endl;
+                jumpLine = 7;
+            }
+            jumpLine--;
+        }
+        break;
+    case 1://3*4
+        break;
+    case 2://4*3
+    default:
+        break;
+    }
+}
 int main(int argc, char const *argv[])
 {
     int year;
-    
     cout << "Enter the year of the canlender which you want to see:" << endl;
     cin >> year;
     //待新增功能：使使用者可選擇輸出格式
@@ -138,7 +134,7 @@ int main(int argc, char const *argv[])
         {
             canlenderTitle(i * 3, year, 3);
             seperator(3);
-            canlenderBody(i*3,year,1);
+            MonthDayOutput(i*3,year,1);
             weekName(3);
         }
 
@@ -146,15 +142,12 @@ int main(int argc, char const *argv[])
     case 2:
         for (int i = 0; i < 3; i++)
         {
-            
             canlenderTitle(i * 4, year, 4);
             seperator(4);
-            canlenderBody(i*3,year,2);
+            MonthDayOutput(i*3,year,2);
             weekName(4);
         }
-
         break;
-
     default:
         cout << "unselected,or error command, the program would process by [default]: 12*1" << endl;
     case 0:
@@ -163,7 +156,7 @@ int main(int argc, char const *argv[])
             canlenderTitle(month, year, 1);
             seperator(1);
             weekName(1);
-            canlenderBody(month, year,0);
+            MonthDayOutput(month, year,0);
             cout << endl;
         }
         break;
