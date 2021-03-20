@@ -129,7 +129,8 @@ void MonthDayOutput(int month, int year, int mode)
             //cout<<<<"|";
             for (int j = 0; j < 6 * firstday[i]; j++)
                 cout << " ";
-            for (int k = 0; k != jumpLine[k] + 1; k++)
+                
+            for (int k = 0; k != jumpLine[i] + 1; k++)
             {
                 cout << setw(6) << right << k + 1;
                 if (jumpLine[i] == k)
@@ -233,7 +234,7 @@ int main(int argc, char const *argv[])
     case 1:
         //3*4
         //i每跳一次會輸出三個月份
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 4; i++)
         {
             canlenderTitle(i * 3, year, 3);
             weekName(3);
