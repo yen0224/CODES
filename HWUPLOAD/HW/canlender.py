@@ -40,7 +40,7 @@ def get_MonthFirstDay(month, year):
 	w = w % 7
 	return w
 
-#FIXME #6 月份天數錯誤
+#FIXME #6 月份天數錯誤 結束點錯誤
 def CanlenderBody(month, year, mode):
 	monthdayLeap = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 	monthday = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
@@ -73,10 +73,12 @@ def CanlenderBody(month, year, mode):
 			firstday[i]=get_MonthFirstDay(monthInFunc,year)
 			jumpLine[i]=6-firstday[i]
 			monthInFunc=monthInFunc+1
-		#輸出空格使其對齊
+		
 		for i in range(0,3):
+			#輸出空格使其對齊
 			for j in range(6*firstday[i]):
 				print(" ",end='')
+			#輸出數字
 			k=0
 			while(k!=jumpLine[i]+1):
 				print("%6d"%(k+1),end='')
@@ -89,7 +91,7 @@ def CanlenderBody(month, year, mode):
 			for i in range(0,3):
 				for j in range(0,7):
 					#fell in here
-					if(frameStart[i]==(monthdayLeap[month] if isLeap else monthday[month])):
+					if(frameStart[i]-1==(monthdayLeap[month+i] if isLeap else monthday[month+i])):
 						print("%6s"%" ",end='')
 					else:
 						print("%6d"%(frameStart[i]),end='')
@@ -119,7 +121,7 @@ def CanlenderBody(month, year, mode):
 		for t in range(5):
 			for i in range(0,4):
 				for j in range(0,7):
-					if(frameStart[i]==(monthdayLeap[month] if isLeap else monthday[month])):
+					if(frameStart[i]-1==(monthdayLeap[month+i] if isLeap else monthday[month+i])):
 						print("%6s"%" ",end='')
 					else:
 						print("%6d"%(frameStart[i]),end='')

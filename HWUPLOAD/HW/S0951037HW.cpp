@@ -10,12 +10,12 @@ int firstday[4], jumpLine[4];
 //不需再更動
 void canlenderTitle(int startMonth, int year, int amount)
 {
-    string mounthName[12] = {
+    string monthName[12] = {
         "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
     for (int i = startMonth; i < startMonth + amount; i++)
     {
         cout << "                " << setw(9) << std::left
-             << mounthName[i] << setw(4) << year
+             << monthName[i] << setw(4) << year
              << "                  ";
     }
     cout << endl;
@@ -43,7 +43,7 @@ void weekName(int tms)
 //判斷該年該月之第一天是星期幾
 //有二參數傳入：月份和年份
 //由高斯公式得出該年該月之一日在星期幾
-int get_monthFirstDay(int month, int year)
+inline int get_monthFirstDay(int month, int year)
 {
     month += 1;
     int d = 1, a, b, m, w;
@@ -103,7 +103,7 @@ void MonthDayOutput(int month, int year, int mode)
         {
             cout << setw(6) << right << i + 1;
 
-            while (jumpLine[0] == 0)
+            if (jumpLine[0] == 0)
             {
                 cout << setw(4) << "|" << endl
                      << "|";
@@ -147,7 +147,6 @@ void MonthDayOutput(int month, int year, int mode)
             {
                 for (int j = 0; j < 7; j++)
                 {
-
                     if (frameStart[i] - 1 == (isLeap ? monthdayLeap[month + i] : monthday[month + i]))
                     {
                         cout << setw(6) << " ";
@@ -219,7 +218,7 @@ int main(int argc, char const *argv[])
 {
     int year;
     cout << "Enter the year of the canlender which you want to see:" << endl;
-    cin >> year;
+    (cin >> year).get();
     //year=2021;
     //待新增功能：使使用者可選擇輸出格式
     cout << "[OPTION] please select the format :" << endl;
@@ -227,7 +226,7 @@ int main(int argc, char const *argv[])
          << "[1] 3x4" << endl
          << "[2] 4x3" << endl;
     int format;
-    cin >> format;
+    (cin >> format).get();
     //format=0;
     switch (format)
     {
