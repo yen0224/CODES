@@ -1,69 +1,157 @@
-# coding=UTF-8
-import time
-def print_month(year, month):
+firstday=[0,0,0,0]
+jumpLine=[0,0,0,0]
+frameStart=[0,0,0,0]
+def canlenderTitle(startMonth, year, time):
+	monthName = ["January", "February", "March", "April", "May", "June",
+                 "July", "August", "September", "October", "November", "December"]
+	for i in range(startMonth, startMonth+time):
+		print("                ", "%9s" %
+              monthName[i], "%4d" % year,"                ", sep='', end='')
 	print()
-	print_month_title(year, month)
-	print_month_body(year%400 + 2000, month)
-	print('\n')
 
 
-def print_month_title(year, month):
+def separate(tms):
+	for i in range(0, tms):
+		print("-----------------------------------------------", sep='', end='')
+		i
+	print()
 
-	print('          ', get_month_name(month), ' ', year)
-	print('---------------------------------------')
-	print('   日   一   二   三   四    五   六')
 
-def print_month_body(year, month):
-	start_day = get_start_day(year, month)
-	number_of_days_in_month = get_number_of_days_in_month(year, month)
-	# print('\033[35;1m %s \033[m' % (30))
-	today = list(time.localtime(time.time()))
-	for i in range(start_day):
-		print('     ', end = '')
-	for j in range(1, number_of_days_in_month+1):
-        #這個地方的作用就是如果你查看的是當年的日曆，那麼這個判斷語句就會
-        #把當天的日曆用紫紅色標出
-		if today[0] == year and today[1] == month and today[2] == j:
-			print('\033[35;1m   %s \033[m' % (j), end = "")
-		else:
-			print(format(j, '4d'), end = ' ')
-		if(j + start_day) % 7 ==0:
+def weekName(tms):
+	for i in range(0, tms):
+		print("     S     M     T     W     T     F     S     ",sep='', end='')
+		i
+	print()
+
+
+def get_MonthFirstDay(month, year):
+	month += 1
+	d = 1
+	m = month+10
+	if m > 12:
+		m = m % 12
+	if(month < 3):
+		year -= 1
+	a = year//100
+	b = year % 100
+	w = d+int(2.6*m-0.2)-2*a+b+a//4+b//4
+	while(w < 7):
+		w += 7
+	w = w % 7
+	return w
+
+#FIXME #6 月份天數錯誤
+def CanlenderBody(month, year, mode):
+	monthdayLeap = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+	monthday = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+	#FIXME #3 閏年判斷錯誤
+	if ((year % 4)==0):
+		if((year % 100)==0):
+			if((year % 400)==0):
+				isLeap = 1
+			else: isLeap = 0
+		else :isLeap=1
+	else: isLeap=0
+
+	if (mode==0):
+		firstday[0]=get_MonthFirstDay(month,year)
+		jumpLine[0]=6-firstday[0]
+		#print("|",end='')
+		for i in range(6*firstday[0]):
+			print(" ",sep='',end='')
+		for i in range(monthdayLeap[month] if isLeap else monthday[month]):
+			print("%6d"%(i+1),end='')
+			if (jumpLine[0]==0):
+				print("%4s"%"|","\n",end='',sep='')
+				jumpLine[0]=7
+			jumpLine[0]=jumpLine[0]-1
+		print()
+	elif(mode==1):
+		monthInFunc=month
+		# 取得每個月的第一天
+		for i in range(0,3):
+			firstday[i]=get_MonthFirstDay(monthInFunc,year)
+			jumpLine[i]=6-firstday[i]
+			monthInFunc=monthInFunc+1
+		#輸出空格使其對齊
+		for i in range(0,3):
+			for j in range(6*firstday[i]):
+				print(" ",end='')
+			k=0
+			while(k!=jumpLine[i]+1):
+				print("%6d"%(k+1),end='')
+				if(jumpLine[i]==k):
+					frameStart[i]=k+2
+				k=k+1
+			print("%5s"%"|",end='')
+		print()
+		for t in range(0,5):
+			for i in range(0,3):
+				for j in range(0,7):
+					#fell in here
+					if(frameStart[i]==(monthdayLeap[month] if isLeap else monthday[month])):
+						print("%6s"%" ",end='')
+					else:
+						print("%6d"%(frameStart[i]),end='')
+						frameStart[i]=frameStart[i]+1
+				print("%5s"%"|",end='')
 			print()
 
-def get_month_name(month):
-	n_month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-	month_name = n_month[month-1]
-	return month_name
-def get_start_day(year, month):
-	START_DAY_FOR_JAN_1_1800 = 3
-	total_number_of_days = get_total_number_of_days(year, month)
-	return((total_number_of_days + START_DAY_FOR_JAN_1_1800) % 7)
-def get_number_of_days_in_month(year, month):
-	if month in [1,3,5,7,8,10,12]:
-		return 31
-	elif month in [4,6,9,11]:
-		return 30
-	elif is_leapyear(year):
-		return 29
-	else:
-		return 28
-def get_total_number_of_days(year, month):
-	total = 0
-	for i in range(1800, year):
-		if is_leapyear(i):
-			total += 366
-		else:
-			total += 365
-	for j in range(1, month):
-		total += get_number_of_days_in_month(year, j)
-	return total
-def is_leapyear(year):
-	if year % 400 == 0 or (year % 4 == 0 and year % 100 != 0):
-		return True
-	else:
-		return False
+	elif(mode==2):
+		monthInFunc=month
+		# 取得每個月的第一天
+		for i in range(0,4):
+			firstday[i]=get_MonthFirstDay(monthInFunc,year)
+			jumpLine[i]=6-firstday[i]
+			monthInFunc=monthInFunc+1
+		#輸出空格使其對齊
+		for i in range(0,4):
+			for j in range(6*firstday[i]):
+				print(" ",end='')
+			k=0
+			while(k!=jumpLine[i]+1):
+				print("%6d"%(k+1),end='')
+				if(jumpLine[i]==k):
+					frameStart[i]=k+2
+				k=k+1
+			print("%5s"%"|",end='')
+		print()
+		for t in range(5):
+			for i in range(0,4):
+				for j in range(0,7):
+					if(frameStart[i]==(monthdayLeap[month] if isLeap else monthday[month])):
+						print("%6s"%" ",end='')
+					else:
+						print("%6d"%(frameStart[i]),end='')
+						frameStart[i]=frameStart[i]+1
+				print("%5s"%"|",end='')
+			print()
 
-year = eval(input('Which year would you want to see? Enter full year (e.g., 2001): '))
-for month_n in range(1,12+1):
-	# year = year%400 + 2000
-	print_month(year, month_n)
+#year=int(input("Enter the year of the canlender which you want to see:"))
+#format=int(input("[OPTION] please select the format :\n[0]12x1\n[1] 3x4\n[2] 4x3"))
+year=2021
+format=2
+if format==1:
+	for i in range(4):
+		canlenderTitle(i*3,year,3)
+		weekName(3)
+		separate(3)
+		CanlenderBody(i*3,year,1)
+		separate(3)
+		print()
+elif format==2:
+	for i in range(3):
+		canlenderTitle(i*4,year,4)
+		weekName(4)
+		separate(4)
+		CanlenderBody(i*4,year,2)
+		separate(4)
+		print()
+elif format==0:
+	for i in range(12):
+		canlenderTitle(i,year,1)
+		weekName(1)
+		separate(1)
+		CanlenderBody(i,year,0)
+		separate(1)
+		print()
