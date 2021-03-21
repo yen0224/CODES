@@ -5,7 +5,7 @@
 //DO NOT COPY
 #include <iostream>
 using namespace std;
-int main(int argc, char const *argv[])
+int main()
 {
     //current population is 312032486
     long current_amount = 312032486;
