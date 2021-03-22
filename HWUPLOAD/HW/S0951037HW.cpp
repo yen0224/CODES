@@ -112,6 +112,7 @@ void MonthDayOutput(int month, int year, int mode)
             jumpLine[0]--;
         }
         break;
+
     //3*4
     case 1:
         //取得接下來輸出三個月的第一天分別是在禮拜幾，並存在陣列中
@@ -129,7 +130,7 @@ void MonthDayOutput(int month, int year, int mode)
             //cout<<<<"|";
             for (int j = 0; j < 6 * firstday[i]; j++)
                 cout << " ";
-                
+
             for (int k = 0; k != jumpLine[i] + 1; k++)
             {
                 cout << setw(6) << right << k + 1;
@@ -138,7 +139,8 @@ void MonthDayOutput(int month, int year, int mode)
                     frameStart[i] = k + 2;
                 }
             }
-            cout << setw(5) << "|";
+            if (i < 2)
+                cout << setw(5) << "|";
         }
         cout << endl;
         for (int t = 0; t < 5; t++)
@@ -157,15 +159,17 @@ void MonthDayOutput(int month, int year, int mode)
                         frameStart[i]++;
                     }
                 }
-                cout << setw(5) << "|";
+                if (i < 2)
+                    cout << setw(5) << "|";
             }
             cout << endl;
         }
         break;
 
     //4*3
+    //FIXME #7 日期錯誤
     case 2:
-        //取得接下來輸出四個月的第一天分別是在禮拜幾，並存在陣列中
+        //取得接下來輸出三個月的第一天分別是在禮拜幾，並存在陣列中
         monthInFunc = month;
         //取得各月之第一天，輸出至哪天需跳行
         for (int i = 0; i < 4; i++)
@@ -174,19 +178,23 @@ void MonthDayOutput(int month, int year, int mode)
             jumpLine[i] = 6 - firstday[i];
             monthInFunc++;
         }
+
         for (int i = 0; i < 4; i++)
         {
+            //cout<<<<"|";
             for (int j = 0; j < 6 * firstday[i]; j++)
                 cout << " ";
+
             for (int k = 0; k != jumpLine[i] + 1; k++)
             {
                 cout << setw(6) << right << k + 1;
                 if (jumpLine[i] == k)
                 {
                     frameStart[i] = k + 2;
-                    cout << setw(5) << "|";
                 }
             }
+            if (i < 3)
+                cout << setw(5) << "|";
         }
         cout << endl;
         for (int t = 0; t < 5; t++)
@@ -205,12 +213,11 @@ void MonthDayOutput(int month, int year, int mode)
                         frameStart[i]++;
                     }
                 }
-                cout << setw(5) << "|";
+                if (i < 3)
+                    cout << setw(5) << "|";
             }
             cout << endl;
         }
-        break;
-    default:
         break;
     }
 }
@@ -218,16 +225,16 @@ int main(int argc, char const *argv[])
 {
     int year;
     cout << "Enter the year of the canlender which you want to see:" << endl;
-    (cin >> year).get();
-    //year=2021;
+    //(cin >> year).get();
+    year=2021;
     //待新增功能：使使用者可選擇輸出格式
     cout << "[OPTION] please select the format :" << endl;
     cout << "[0]12x1" << endl
          << "[1] 3x4" << endl
          << "[2] 4x3" << endl;
     int format;
-    (cin >> format).get();
-    //format=0;
+    //(cin >> format).get();
+    format=2;
     switch (format)
     {
     case 1:
@@ -250,7 +257,7 @@ int main(int argc, char const *argv[])
             canlenderTitle(i * 4, year, 4);
             weekName(4);
             seperator(4);
-            MonthDayOutput(i * 3, year, 2);
+            MonthDayOutput(i * 4, year, 2);
             seperator(4);
             cout << endl;
         }

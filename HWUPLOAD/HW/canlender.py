@@ -42,7 +42,6 @@ def get_MonthFirstDay(month, year):
     w = w % 7
     return w
 
-# FIXME #6 月份天數錯誤 結束點錯誤
 
 
 def CanlenderBody(month, year, mode):
@@ -92,7 +91,8 @@ def CanlenderBody(month, year, mode):
                 if(jumpLine[i] == k):
                     frameStart[i] = k+2
                 k = k+1
-            print("%5s" % "|", end='')
+            if(i<2):
+                print("%5s" % "|", end='')
         print()
         for t in range(0, 5):
             for i in range(0, 3):
@@ -103,7 +103,8 @@ def CanlenderBody(month, year, mode):
                     else:
                         print("%6d" % (frameStart[i]), end='')
                         frameStart[i] = frameStart[i]+1
-                print("%5s" % "|", end='')
+                if(i<2):
+                    print("%5s" % "|", end='')
             print()
 
     elif(mode == 2):
@@ -123,7 +124,8 @@ def CanlenderBody(month, year, mode):
                 if(jumpLine[i] == k):
                     frameStart[i] = k+2
                 k = k+1
-            print("%5s" % "|", end='')
+            if(i<3):
+                print("%5s" % "|", end='')
         print()
         for t in range(5):
             for i in range(0, 4):
@@ -133,7 +135,8 @@ def CanlenderBody(month, year, mode):
                     else:
                         print("%6d" % (frameStart[i]), end='')
                         frameStart[i] = frameStart[i]+1
-                print("%5s" % "|", end='')
+                if(i<3):
+                    print("%5s" % "|", end='')
             print()
 
 
