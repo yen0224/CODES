@@ -1,5 +1,7 @@
 //written by Chiayen,HSU,S0951037
 //DO NOT COPY
+//Linux distribution. Debian TESTED:(Raspbian 8.3.0-6+rpi1) 8.3.0
+//MacOS Big Sur TESTED: Apple clang version 12.0.0 (clang-1200.0.32.29)
 //basic input &output header
 #include <iostream>
 //in order to use setw() method
