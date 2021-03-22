@@ -1,21 +1,25 @@
 //written by Chiayen,HSU,S0951037
 //DO NOT COPY
+//basic input &output header
 #include <iostream>
+//in order to use setw() method
 #include <iomanip>
-//#include <time.h>
 using namespace std;
 int frameStart[4];
 int firstday[4], jumpLine[4];
 //在這邊輸出所有的月曆標頭，並用陣列特性直接呼叫月份名稱出來
-//不需再更動
 void canlenderTitle(int startMonth, int year, int amount)
 {
     string monthName[12] = {
         "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
     for (int i = startMonth; i < startMonth + amount; i++)
     {
-        cout << "                " << setw(9) << std::left
-             << monthName[i] << setw(4) << year
+        cout << "                "
+             << setw(9)
+             << std::left
+             << monthName[i]
+             << setw(4)
+             << year
              << "                  ";
     }
     cout << endl;
@@ -69,10 +73,15 @@ inline int get_monthFirstDay(int month, int year)
 //輸出月曆，參數：月，跳行，模式
 void MonthDayOutput(int month, int year, int mode)
 {
+    //閏年判斷結果
     int isLeap;
+    //為使原始參數不被更改，新增local variable
     int monthInFunc;
+    //閏年天數
     int monthdayLeap[12] = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    //非閏年天數
     int monthday[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    //判斷閏年，並將結果存入variable isLeap
     if (year % 4 == 0)
     {
         if (year % 100 == 0)
@@ -91,6 +100,7 @@ void MonthDayOutput(int month, int year, int mode)
     {
         isLeap = 0;
     }
+    //依據參數mode決定執行內容
     switch (mode)
     {
     case 0:
@@ -226,7 +236,7 @@ int main(int argc, char const *argv[])
     int year;
     cout << "Enter the year of the canlender which you want to see:" << endl;
     //(cin >> year).get();
-    year=2021;
+    year = 2021;
     //待新增功能：使使用者可選擇輸出格式
     cout << "[OPTION] please select the format :" << endl;
     cout << "[0]12x1" << endl
@@ -234,7 +244,7 @@ int main(int argc, char const *argv[])
          << "[2] 4x3" << endl;
     int format;
     //(cin >> format).get();
-    format=2;
+    format = 2;
     switch (format)
     {
     case 1:
