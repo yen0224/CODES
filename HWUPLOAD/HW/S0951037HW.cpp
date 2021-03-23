@@ -49,6 +49,7 @@ void weekName(int tms)
 //判斷該年該月之第一天是星期幾
 //有二參數傳入：月份和年份
 //由高斯公式得出該年該月之一日在星期幾
+//FIXME #9 1582年曆法轉換問題
 inline int get_monthFirstDay(int month, int year)
 {
     month += 1;
@@ -65,11 +66,21 @@ inline int get_monthFirstDay(int month, int year)
         a = year / 100;
         b = year % 100;
     }
-    w = d + int(2.6 * m - 0.2) - 2 * a + b + int(a / 4) + int(b / 4);
+    while (a < 7)
+        a += 7;
+    a%=7;
+    if(year<1583){
+    w = d + int(2.6 * m - 2.2) - 2 * a + b + int(a / 4) + int(b / 4);
+    }
     //cout<<a<<" "<<b<<" "<<m<<" "<<d<<" "<<w<<endl;
+    else{
+    w = d + int(2.6 * m - 0.2) - 2 * a + b + int(a / 4) + int(b / 4);
+    }
+    
     while (w < 7)
         w += 7;
     w %= 7;
+    cout<<"a"<<a<<"b"<<b<<"m"<<m<<endl;
     return w;
 }
 //輸出月曆，參數：月，跳行，模式
@@ -237,16 +248,16 @@ int main(int argc, char const *argv[])
 {
     int year;
     cout << "Enter the year of the canlender which you want to see:" << endl;
-    //(cin >> year).get();
-    year = 2021;
+    (cin >> year).get();
+    //year = 2021;
     //待新增功能：使使用者可選擇輸出格式
     cout << "[OPTION] please select the format :" << endl;
     cout << "[0]12x1" << endl
          << "[1] 3x4" << endl
          << "[2] 4x3" << endl;
     int format;
-    //(cin >> format).get();
-    format = 2;
+    (cin >> format).get();
+    //format = 2;
     switch (format)
     {
     case 1:
