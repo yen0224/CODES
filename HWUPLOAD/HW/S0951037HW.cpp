@@ -54,36 +54,38 @@ inline int get_monthFirstDay(int month, int year)
 {
     month += 1;
     int d = 1, y, c, m, w;
-    m = month + 12 - 2;
-    (m > 12 ? m %= 12 : m);
     if (month == 1 || month == 2)
     {
+        m = month + 12;
         c = (year - 1) / 100;
-        y = (year-1) % 100;
+        y = (year - 1) % 100;
     }
     else
     {
+        m=month;
         c = year / 100;
         y = year % 100;
     }
-    while (y < 7)
-        y += 7;
-    y%=7;
-    if(year<1583){
-    w = d + int(2.6 * m - 2.2) +3*y+6*(c%7);
+
+    if (year < 1583)
+    {
+        if (month>10)
+        {
+            /* 1582年之11月起使用新曆 */
+            w=y+y/4+c/4-2*c+2*m+(3*(m+1))/5+d+1;
+        }
+        else{
+            //  舊曆
+            w=y+y/4-c+2*m+(3*(m+1))/5+d-1;
+            
+        }
     }
-  
-    while (a < 7)
-        a += 7;
-    a%=7;
-    if(year<1583){
-    w = d + int(2.6 * m - 2.2) - 2 * a + b + int(a / 4) + int(b / 4);
+    else
+    {
+        //新曆
+        w=y+y/4+c/4-2*c+2*m+(3*(m+1))/5+d+1;
     }
-    //cout<<a<<" "<<b<<" "<<m<<" "<<d<<" "<<w<<endl;
-    else{
-    w = d + int(2.6 * m - 0.2) - 2 * a + b + int(a / 4) + int(b / 4);
-    }
-    
+
     while (w < 7)
         w += 7;
     w %= 7;
@@ -254,16 +256,16 @@ int main(int argc, char const *argv[])
 {
     int year;
     cout << "Enter the year of the canlender which you want to see:" << endl;
-    (cin >> year).get();
-    //year = 2021;
+    //(cin >> year).get();
+    year = 1582;
     //待新增功能：使使用者可選擇輸出格式
     cout << "[OPTION] please select the format :" << endl;
     cout << "[0]12x1" << endl
          << "[1] 3x4" << endl
          << "[2] 4x3" << endl;
     int format;
-    (cin >> format).get();
-    //format = 2;
+    //(cin >> format).get();
+    format = 0;
     switch (format)
     {
     case 1:
