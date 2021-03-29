@@ -48,7 +48,7 @@ void weekName(int tms)
 }
 //判斷該年該月之第一天是星期幾
 //有二參數傳入：月份和年份
-//由高斯公式得出該年該月之一日在星期幾
+//由蔡勒公式得出該年該月之一日在星期幾
 //FIXME #9 1582年曆法轉換問題
 inline int get_monthFirstDay(int month, int year)
 {
@@ -62,28 +62,28 @@ inline int get_monthFirstDay(int month, int year)
     }
     else
     {
-        m=month;
+        m = month;
         c = year / 100;
         y = year % 100;
     }
 
     if (year < 1583)
     {
-        if (month>10)
+        if (month > 10)
         {
             /* 1582年之11月起使用新曆 */
-            w=y+y/4+c/4-2*c+2*m+(3*(m+1))/5+d+1;
+            w = y + y / 4 + c / 4 - 2 * c + 2 * m + (3 * (m + 1)) / 5 + d + 1;
         }
-        else{
+        else
+        {
             //  舊曆
-            w=y+y/4-c+2*m+(3*(m+1))/5+d-1;
-            
+            w = y + y / 4 - c + 2 * m + (3 * (m + 1)) / 5 + d - 1;
         }
     }
     else
     {
         //新曆
-        w=y+y/4+c/4-2*c+2*m+(3*(m+1))/5+d+1;
+        w = y + y / 4 + c / 4 - 2 * c + 2 * m + (3 * (m + 1)) / 5 + d + 1;
     }
 
     while (w < 7)
@@ -132,7 +132,18 @@ void MonthDayOutput(int month, int year, int mode)
             cout << " ";
         for (int i = 0; i < (isLeap ? monthdayLeap[month] : monthday[month]); i++)
         {
-            cout << setw(6) << right << i + 1;
+            if (year == 1582 && month ==9)
+            {
+                if (i + 1 > 4 && i + 1 < 15)
+                {
+                    continue;
+                }
+                else cout << setw(6) << right << i + 1;
+            }
+            else
+            {
+                cout << setw(6) << right << i + 1;
+            }
 
             if (jumpLine[0] == 0)
             {
@@ -196,9 +207,7 @@ void MonthDayOutput(int month, int year, int mode)
             cout << endl;
         }
         break;
-
     //4*3
-    //FIXME #7 日期錯誤
     case 2:
         //取得接下來輸出三個月的第一天分別是在禮拜幾，並存在陣列中
         monthInFunc = month;
