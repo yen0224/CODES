@@ -52,24 +52,34 @@ void weekName(int tms)
 inline int get_monthFirstDay(int month, int year)
 {
     month += 1;
-    int d = 1, a, b, m, w;
+    int d = 1, y, c, m, w;
     m = month + 12 - 2;
     (m > 12 ? m %= 12 : m);
     if (month == 1 || month == 2)
     {
-        a = (year - 1) / 100;
-        b = (year - 1) % 100;
+        c = (year - 1) / 100;
+        y = (year-1) % 100;
     }
     else
     {
-        a = year / 100;
-        b = year % 100;
+        c = year / 100;
+        y = year % 100;
     }
-    w = d + int(2.6 * m - 0.2) - 2 * a + b + int(a / 4) + int(b / 4);
+    while (y < 7)
+        y += 7;
+    y%=7;
+    if(year<1583){
+    w = d + int(2.6 * m - 2.2) +3*y+6*(c%7);
+    }
     //cout<<a<<" "<<b<<" "<<m<<" "<<d<<" "<<w<<endl;
+    else{
+    w = d + int(2.6 * m - 0.2) +3*y+5*(c%4) ;
+    }
+    
     while (w < 7)
         w += 7;
     w %= 7;
+    //cout<<"a"<<a<<"b"<<b<<"m"<<m<<endl;
     return w;
 }
 //輸出月曆，參數：月，跳行，模式
