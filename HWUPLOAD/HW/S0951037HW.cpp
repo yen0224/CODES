@@ -27,7 +27,6 @@ void canlenderTitle(int startMonth, int year, int amount)
     cout << endl;
 }
 //月跟月的分界、星期名稱與數字的分隔，可連續輸出多個
-//不需再做更動
 void seperator(int tms)
 {
     for (int i = 0; i < tms; i++)
@@ -37,7 +36,6 @@ void seperator(int tms)
     cout << endl;
 }
 //輸出星期名稱，可連續輸出多個
-//不需再做更動
 void weekName(int tms)
 {
     for (int i = 0; i < tms; i++)
@@ -102,6 +100,7 @@ void MonthDayOutput(int month, int year, int mode)
     int monthdayLeap[12] = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     //非閏年天數
     int monthday[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    int year1582jump = 15;
     //判斷閏年，並將結果存入variable isLeap
     if (year % 4 == 0)
     {
@@ -127,18 +126,19 @@ void MonthDayOutput(int month, int year, int mode)
     case 0:
         firstday[0] = get_monthFirstDay(month, year);
         jumpLine[0] = 6 - firstday[0];
-        cout << "|";
+        //cout << "|";
         for (int i = 0; i < 6 * firstday[0]; i++)
             cout << " ";
         for (int i = 0; i < (isLeap ? monthdayLeap[month] : monthday[month]); i++)
         {
-            if (year == 1582 && month ==9)
+            if (year == 1582 && month == 9)
             {
                 if (i + 1 > 4 && i + 1 < 15)
                 {
                     continue;
                 }
-                else cout << setw(6) << right << i + 1;
+                else
+                    cout << setw(6) << right << i + 1;
             }
             else
             {
@@ -147,8 +147,8 @@ void MonthDayOutput(int month, int year, int mode)
 
             if (jumpLine[0] == 0)
             {
-                cout << setw(4) << "|" << endl
-                     << "|";
+                //cout << setw(4) << "|" << endl<< "|";
+                cout<<endl;
                 jumpLine[0] = 7;
             }
             jumpLine[0]--;
@@ -170,6 +170,10 @@ void MonthDayOutput(int month, int year, int mode)
         }
         //3*4
         //^
+        
+        /*  year1582,starts at monday, so firstday=1
+         *  jumpline= 6 - 1 = 5
+         */
         for (int i = 0; i < 3; i++)
         {
             //cout<<" "; 輸出對齊用空格
@@ -178,11 +182,38 @@ void MonthDayOutput(int month, int year, int mode)
 
             for (int k = 0; k != jumpLine[i] + 1; k++)
             {
-                
-                cout << setw(6) << right << k + 1;
-                if (jumpLine[i] == k)
+                if (year != 1582)
                 {
-                    frameStart[i] = k + 2;
+                    cout << setw(6) << right << k + 1;
+                    if (jumpLine[i] == k)
+                    {
+                        frameStart[i] = k + 2;
+                    }
+                }
+                else
+                {
+                    if (month + i == 9)
+                    {
+                        if (k < 4)
+                            cout << setw(6) << right << k + 1;
+                        else
+                        {
+                            cout << setw(6) << right << year1582jump;
+                            year1582jump++;
+                            if(year1582jump==17){
+                                frameStart[i]=year1582jump;
+                                continue;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        cout << setw(6) << right << k + 1;
+                        if (jumpLine[i] == k)
+                        {
+                            frameStart[i] = k + 2;
+                        }
+                    }
                 }
             }
             if (i < 2)
@@ -230,10 +261,38 @@ void MonthDayOutput(int month, int year, int mode)
 
             for (int k = 0; k != jumpLine[i] + 1; k++)
             {
-                cout << setw(6) << right << k + 1;
-                if (jumpLine[i] == k)
+                if (year != 1582)
                 {
-                    frameStart[i] = k + 2;
+                    cout << setw(6) << right << k + 1;
+                    if (jumpLine[i] == k)
+                    {
+                        frameStart[i] = k + 2;
+                    }
+                }
+                else
+                {
+                    if (month + i == 9)
+                    {
+                        if (k < 4)
+                            cout << setw(6) << right << k + 1;
+                        else
+                        {
+                            cout << setw(6) << right << year1582jump;
+                            year1582jump++;
+                            if(year1582jump==17){
+                                frameStart[i]=year1582jump;
+                                continue;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        cout << setw(6) << right << k + 1;
+                        if (jumpLine[i] == k)
+                        {
+                            frameStart[i] = k + 2;
+                        }
+                    }
                 }
             }
             if (i < 3)
@@ -268,16 +327,16 @@ int main(int argc, char const *argv[])
 {
     int year;
     cout << "Enter the year of the canlender which you want to see:" << endl;
-    //(cin >> year).get();
-    year = 1582;
+    (cin >> year).get();
+    //year = 1582;
     //待新增功能：使使用者可選擇輸出格式
     cout << "[OPTION] please select the format :" << endl;
     cout << "[0]12x1" << endl
          << "[1] 3x4" << endl
          << "[2] 4x3" << endl;
     int format;
-    //(cin >> format).get();
-    format = 0;
+    (cin >> format).get();
+    //format = 2;
     switch (format)
     {
     case 1:
@@ -314,6 +373,8 @@ int main(int argc, char const *argv[])
             weekName(1);
             seperator(1);
             MonthDayOutput(month, year, 0);
+            cout<<endl;
+            seperator(1);
             cout << endl;
         }
         break;
