@@ -148,7 +148,7 @@ void MonthDayOutput(int month, int year, int mode)
             if (jumpLine[0] == 0)
             {
                 //cout << setw(4) << "|" << endl<< "|";
-                cout<<endl;
+                cout << endl;
                 jumpLine[0] = 7;
             }
             jumpLine[0]--;
@@ -170,7 +170,7 @@ void MonthDayOutput(int month, int year, int mode)
         }
         //3*4
         //^
-        
+
         /*  year1582,starts at monday, so firstday=1
          *  jumpline= 6 - 1 = 5
          */
@@ -200,8 +200,9 @@ void MonthDayOutput(int month, int year, int mode)
                         {
                             cout << setw(6) << right << year1582jump;
                             year1582jump++;
-                            if(year1582jump==17){
-                                frameStart[i]=year1582jump;
+                            if (year1582jump == 17)
+                            {
+                                frameStart[i] = year1582jump;
                                 continue;
                             }
                         }
@@ -279,8 +280,9 @@ void MonthDayOutput(int month, int year, int mode)
                         {
                             cout << setw(6) << right << year1582jump;
                             year1582jump++;
-                            if(year1582jump==17){
-                                frameStart[i]=year1582jump;
+                            if (year1582jump == 17)
+                            {
+                                frameStart[i] = year1582jump;
                                 continue;
                             }
                         }
@@ -325,59 +327,79 @@ void MonthDayOutput(int month, int year, int mode)
 }
 int main(int argc, char const *argv[])
 {
-    int year;
-    cout << "Enter the year of the canlender which you want to see:" << endl;
-    (cin >> year).get();
-    //year = 1582;
-    //待新增功能：使使用者可選擇輸出格式
-    cout << "[OPTION] please select the format :" << endl;
-    cout << "[0]12x1" << endl
-         << "[1] 3x4" << endl
-         << "[2] 4x3" << endl;
-    int format;
-    (cin >> format).get();
-    //format = 2;
-    switch (format)
+    int year, functionselect;
+    cout << "PLEASE SELECT: which function would you like to use" << endl;
+    cout << "[0] print the canlendar of selected month" << endl;
+    cout << "[1] print the canlendar of the year" << endl;
+    cin >> functionselect;
+    if (functionselect)
     {
-    case 1:
-        //3*4
-        //i每跳一次會輸出三個月份
-        for (int i = 0; i < 4; i++)
+        cout << "Enter the year:";
+        (cin >> year).get();
+        //year = 1582;
+        cout << "[OPTION] please select the format :";
+        cout << "[0]12x1" << endl
+             << "[1] 3x4" << endl
+             << "[2] 4x3" << endl;
+        int format;
+        (cin >> format).get();
+        //format = 2;
+        switch (format)
         {
-            canlenderTitle(i * 3, year, 3);
-            weekName(3);
-            seperator(3);
-            MonthDayOutput(i * 3, year, 1);
-            seperator(3);
-            cout << endl;
-        }
+        case 1:
+            //3*4
+            //i每跳一次會輸出三個月份
+            for (int i = 0; i < 4; i++)
+            {
+                canlenderTitle(i * 3, year, 3);
+                weekName(3);
+                seperator(3);
+                MonthDayOutput(i * 3, year, 1);
+                seperator(3);
+                cout << endl;
+            }
 
-        break;
-    case 2:
-        for (int i = 0; i < 3; i++)
-        {
-            canlenderTitle(i * 4, year, 4);
-            weekName(4);
-            seperator(4);
-            MonthDayOutput(i * 4, year, 2);
-            seperator(4);
-            cout << endl;
+            break;
+        case 2:
+            for (int i = 0; i < 3; i++)
+            {
+                canlenderTitle(i * 4, year, 4);
+                weekName(4);
+                seperator(4);
+                MonthDayOutput(i * 4, year, 2);
+                seperator(4);
+                cout << endl;
+            }
+            break;
+        default:
+            cout << "unselected,or error command, the program would process by default format: [12*1]" << endl;
+        case 0:
+            for (int month = 0; month < 12; month++)
+            {
+                canlenderTitle(month, year, 1);
+                weekName(1);
+                seperator(1);
+                MonthDayOutput(month, year, 0);
+                cout << endl;
+                seperator(1);
+                cout << endl;
+            }
+            break;
         }
-        break;
-    default:
-        cout << "unselected,or error command, the program would process by [default]: 12*1" << endl;
-    case 0:
-        for (int month = 0; month < 12; month++)
-        {
-            canlenderTitle(month, year, 1);
-            weekName(1);
-            seperator(1);
-            MonthDayOutput(month, year, 0);
-            cout<<endl;
-            seperator(1);
-            cout << endl;
-        }
-        break;
+    }
+    else
+    {
+        int month;
+        cout << "Enter year:";
+        cin >> year;
+        cout << "Enter month (1-12):";
+        cin >> month;
+        canlenderTitle(month - 1, year, 1);
+        weekName(1);
+        seperator(1);
+        MonthDayOutput(month - 1, year, 0);
+        cout << endl;
+        seperator(1);
     }
     cout << "THE PROGRAM IS WRITTEN BY CHIA-YEN, HSU" << endl
          << "DO NOT COPY" << endl;
