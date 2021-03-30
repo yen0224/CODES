@@ -49,7 +49,7 @@ void weekName(int tms)
 //判斷該年該月之第一天是星期幾
 //有二參數傳入：月份和年份
 //由蔡勒公式得出該年該月之一日在星期幾
-//FIXME #9 1582年曆法轉換問題
+//https://zh.wikipedia.org/wiki/蔡勒公式
 inline int get_monthFirstDay(int month, int year)
 {
     month += 1;
@@ -156,6 +156,8 @@ void MonthDayOutput(int month, int year, int mode)
         break;
 
     //3*4
+    //from for(int i=0;i<4;i++)~~monthdayouput(i*3,year,3)
+    //傳入值：0,3,6,9
     case 1:
         //取得接下來輸出三個月的第一天分別是在禮拜幾，並存在陣列中
         monthInFunc = month;
@@ -166,15 +168,17 @@ void MonthDayOutput(int month, int year, int mode)
             jumpLine[i] = 6 - firstday[i];
             monthInFunc++;
         }
-
+        //3*4
+        //^
         for (int i = 0; i < 3; i++)
         {
-            //cout<<<<"|";
+            //cout<<" "; 輸出對齊用空格
             for (int j = 0; j < 6 * firstday[i]; j++)
                 cout << " ";
 
             for (int k = 0; k != jumpLine[i] + 1; k++)
             {
+                
                 cout << setw(6) << right << k + 1;
                 if (jumpLine[i] == k)
                 {
@@ -218,7 +222,6 @@ void MonthDayOutput(int month, int year, int mode)
             jumpLine[i] = 6 - firstday[i];
             monthInFunc++;
         }
-
         for (int i = 0; i < 4; i++)
         {
             //cout<<<<"|";
