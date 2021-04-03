@@ -25,23 +25,46 @@ def weekName(tms):
         i
     print()
 
+# 大更動前備份
+# def get_MonthFirstDay(month, year):
+#    month += 1
+#    d = 1
+#    m = month+10
+#    if m > 12:
+#        m = m % 12
+#    if(month < 3):
+#        year -= 1
+#    a = year//100
+#    b = year % 100
+#    w = d+int(2.6*m-0.2)-2*a+b+a//4+b//4
+#    while(w < 7):
+#        w += 7
+#    w = w % 7
+#    return w
+
 
 def get_MonthFirstDay(month, year):
     month += 1
     d = 1
-    m = month+10
-    if m > 12:
-        m = m % 12
-    if(month < 3):
-        year -= 1
-    a = year//100
-    b = year % 100
-    w = d+int(2.6*m-0.2)-2*a+b+a//4+b//4
-    while(w < 7):
-        w += 7
-    w = w % 7
+    if(month == 1 or month == 2):
+        m = month+12
+        c = (year-1)//100
+        y = (year-1) % 100
+    else:
+        m = month
+        c = year//100
+        y = year % 100
+    if (year < 1583):
+        if(month > 10):
+            w = y+y//4+c//4-2*c+2*m+(3*(m+1))//5+d+1
+        else:
+            w = y+y//4-c+2*m+(3*(m+1))//5+d-1
+    else:
+        w = y + y // 4 + c // 4 - 2 * c + 2 * m + (3 * (m + 1)) // 5 + d + 1
+    while w<7:
+        w=w+7
+    w=w%7
     return w
-
 
 
 def CanlenderBody(month, year, mode):
@@ -66,9 +89,17 @@ def CanlenderBody(month, year, mode):
         for i in range(6*firstday[0]):
             print(" ", sep='', end='')
         for i in range(monthdayLeap[month] if isLeap else monthday[month]):
-            print("%6d" % (i+1), end='')
+            if year==1582 and month==9:
+                if i+1>4 and i+1<15:
+                    continue
+                else:
+                    print("%6d"%(i+1),end='')
+            else:
+                print("%6d"%(i+1),end='')
+            #print("%6d" % (i+1), end='')
             if (jumpLine[0] == 0):
-                print("%4s" % "|", "\n", end='', sep='')
+                #print("%4s" % "|", "\n", end='', sep='')
+                print()
                 jumpLine[0] = 7
             jumpLine[0] = jumpLine[0]-1
         print()
@@ -91,7 +122,7 @@ def CanlenderBody(month, year, mode):
                 if(jumpLine[i] == k):
                     frameStart[i] = k+2
                 k = k+1
-            if(i<2):
+            if(i < 2):
                 print("%5s" % "|", end='')
         print()
         for t in range(0, 5):
@@ -103,7 +134,7 @@ def CanlenderBody(month, year, mode):
                     else:
                         print("%6d" % (frameStart[i]), end='')
                         frameStart[i] = frameStart[i]+1
-                if(i<2):
+                if(i < 2):
                     print("%5s" % "|", end='')
             print()
 
@@ -124,7 +155,7 @@ def CanlenderBody(month, year, mode):
                 if(jumpLine[i] == k):
                     frameStart[i] = k+2
                 k = k+1
-            if(i<3):
+            if(i < 3):
                 print("%5s" % "|", end='')
         print()
         for t in range(5):
@@ -135,13 +166,14 @@ def CanlenderBody(month, year, mode):
                     else:
                         print("%6d" % (frameStart[i]), end='')
                         frameStart[i] = frameStart[i]+1
-                if(i<3):
+                if(i < 3):
                     print("%5s" % "|", end='')
             print()
 
 
-year=int(input("Enter the year of the canlender which you want to see:"))
-format=int(input("[OPTION] please select the format :\n[0]12x1\n[1] 3x4\n[2] 4x3"))
+year = int(input("Enter the year of the canlender which you want to see:"))
+format = int(
+    input("[OPTION] please select the format :\n[0]12x1\n[1] 3x4\n[2] 4x3"))
 #year = 2021
 #format = 2
 if format == 1:
