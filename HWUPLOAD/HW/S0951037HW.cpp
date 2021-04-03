@@ -328,7 +328,7 @@ void MonthDayOutput(int month, int year, int mode)
 int main(int argc, char const *argv[])
 {
     int year, functionselect;
-    cout << "PLEASE SELECT: which function would you like to use" << endl;
+    cout << "PLEASE SELECT: which functionality would you like to use" << endl;
     cout << "[0] print the canlendar of selected month" << endl;
     cout << "[1] print the canlendar of the year" << endl;
     cin >> functionselect;
