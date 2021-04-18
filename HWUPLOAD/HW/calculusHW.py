@@ -1,10 +1,6 @@
 """
 班級、學號、姓名:機電一、S0951037、許佳硯
 作業內容：
-
-矩形積分法
-計算切格數為10,15,100,500,1000，並列表
-
 Simpson's 積分法
 分別計算計算切格數為10,15,100,500,1000，並列表
 並說明
@@ -17,8 +13,8 @@ a = 0  # 積分初始值
 times = [10, 50, 100, 500, 1000]
 for N in times:
     delta = (b-a)/N  # deltaX
-    ODDsum = 0
-    EVENsum = 0
+    ODDsum = 0 #基數相和
+    EVENsum = 0 #偶數項和
     xi = 0
     xj = 0
     ans = 0
@@ -34,8 +30,8 @@ for N in times:
         xj = a+i*delta/2
         EVENsum = EVENsum+np.sin(xj)
     ans = delta/6*(np.sin(a)+2*EVENsum+4*ODDsum+np.sin(b))  # 積分值 (答案)
-    print(ans)
-"""
+    print("分割{0:4d}".format(N),"次，Simpson數值積分法得值為{:.15f}".format(ans),"與理論值誤差","{0:.10%}".format((ans-2)/2)) #輸出計算N次之結果，與理論值之誤差
+
 # 繪圖部分
 
 X[0] = a
@@ -50,4 +46,4 @@ plt.xlabel("phase")
 plt.ylabel("Sine  (arb.)")
 plt.title("Plot  of  Sine  function")
 plt.show()
-"""
+
